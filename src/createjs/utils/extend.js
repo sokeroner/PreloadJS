@@ -31,7 +31,9 @@
  */
 
 // namespace:
-this.createjs = this.createjs||{};
+if (typeof global == "undefined") { global = window; }
+global.createjs = typeof global.createjs == "undefined"?{}:global.createjs;
+
 
 /**
  * @class Utility Methods
@@ -55,7 +57,7 @@ this.createjs = this.createjs||{};
  * @param {Function} superclass The superclass to extend.
  * @return {Function} Returns the subclass's new prototype.
  */
-createjs.extend = function(subclass, superclass) {
+global.createjs.extend = function(subclass, superclass) {
 	"use strict";
 
 	function o() { this.constructor = subclass; }

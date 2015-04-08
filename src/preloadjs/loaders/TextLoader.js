@@ -32,9 +32,10 @@
  */
 
 // namespace:
-this.createjs = this.createjs || {};
+if (typeof global == "undefined") { global = window; }
+global.createjs = typeof global.createjs == "undefined"?{}:global.createjs;
 
-(function () {
+(function (createjs) {
 	"use strict";
 
 	// constructor
@@ -67,4 +68,4 @@ this.createjs = this.createjs || {};
 
 	createjs.TextLoader = createjs.promote(TextLoader, "AbstractLoader");
 
-}());
+}(global.createjs));

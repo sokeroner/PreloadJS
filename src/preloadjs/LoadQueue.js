@@ -88,7 +88,9 @@
  */
 
 // namespace:
-this.createjs = this.createjs || {};
+
+if (typeof global == "undefined") { global = window; }
+global.createjs = typeof global.createjs == "undefined"?{}:global.createjs;
 
 /*
  TODO: WINDOWS ISSUES
@@ -102,7 +104,7 @@ this.createjs = this.createjs || {};
  * Reported issues with IE7/8
  */
 
-(function () {
+(function (createjs) {
 	"use strict";
 
 // constructor
@@ -1917,4 +1919,4 @@ this.createjs = this.createjs || {};
 	};
 
 	createjs.LoadQueue = createjs.promote(LoadQueue, "AbstractLoader");
-}());
+}(global.createjs));

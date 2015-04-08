@@ -32,9 +32,10 @@
  */
 
 // namespace:
-this.createjs = this.createjs || {};
+if (typeof global == "undefined") { global = window; }
+global.createjs = typeof global.createjs == "undefined"?{}:global.createjs;
 
-(function () {
+(function (createjs) {
 	"use strict";
 
 	/**
@@ -225,4 +226,4 @@ this.createjs = this.createjs || {};
 
 	createjs.LoadItem = s;
 
-}());
+}(global.createjs));

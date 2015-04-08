@@ -30,8 +30,10 @@
 /**
  * @module PreloadJS
  */
+if (typeof global == "undefined") { global = window; }
+global.createjs = typeof global.createjs == "undefined"?{}:global.createjs;
 
-(function () {
+(function (createjs) {
 
 	/**
 	 * Utilities that assist with parsing load items, and determining file types, etc.
@@ -321,4 +323,4 @@
 
 	createjs.RequestUtils = s;
 
-}());
+}(global.createjs));
