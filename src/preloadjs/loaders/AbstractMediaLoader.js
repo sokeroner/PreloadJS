@@ -56,6 +56,8 @@ this.createjs = this.createjs || {};
 
 		// protected properties
 		this._tagSrcAttribute = "src";
+		
+		this.on("initialize", this._updateXHR, this);
 	};
 
 	var p = createjs.extend(AbstractMediaLoader, createjs.AbstractLoader);
@@ -102,9 +104,29 @@ this.createjs = this.createjs || {};
 		this._tag.removeEventListener && this._tag.removeEventListener("canplaythrough", this._loadedHandler);
 		this._tag.onstalled = null;
 		if (this._preferXHR) {
-			loader.getTag().src = loader.getResult(true);
+			var URL = window.URL || window.webkitURL;
+			if (URL != null) {
+				loader.getTag().src = URL.createObjectURL(loader.getResult(true));
+			} else {
+				loader.getTag().src = loader.getItem().src;
+			}
 		}
 		return loader.getTag();
+	};
+
+	/**
+	 * Before the item loads, set its mimeType and responseType.
+	 * @property _updateXHR
+	 * @param {Event} event
+	 * @private
+	 */
+	p._updateXHR = function (event) {
+		event.loader.mimeType = 'text/plain; charset=x-user-defined-binary';
+
+		// Only exists for XHR
+		if (event.loader.setResponseType) {
+			event.loader.setResponseType("blob");
+		}
 	};
 
 	createjs.AbstractMediaLoader = createjs.promote(AbstractMediaLoader, "AbstractLoader");
