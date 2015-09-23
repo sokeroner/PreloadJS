@@ -1,3 +1,4 @@
+createjs = exports;
 this.createjs = this.createjs || {};
 
 (function () {
